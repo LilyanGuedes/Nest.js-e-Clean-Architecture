@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { Repository } from 'typeorm';
-import { PorjectStatus, Project } from './entities/project.entity';
+import { ProjectStatus, Project } from './entities/project.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { error } from 'console';
 
@@ -18,7 +18,7 @@ export class ProjectsService {
     const project = new Project(createProjectDto)
     
     if(project.started_at) {
-      project.status = PorjectStatus.Active;
+      project.status = ProjectStatus.Active;
     }
 
     return this.projectRepo.save(project);
@@ -36,27 +36,27 @@ export class ProjectsService {
     const project = await this.projectRepo.findOneOrFail({where: {id}})
 
     if(updateProjectDto.started_at) {
-      if(project.status === PorjectStatus.Active) {
+      if(project.status === ProjectStatus.Active) {
         throw new Error('Cannot start activated project')
       }
 
-      if(project.status === PorjectStatus.Completed) {
+      if(project.status === ProjectStatus.Completed) {
         throw new Error('Cannot start completed project')
       }
 
-      if(project.status === PorjectStatus.Cancelled) {
+      if(project.status === ProjectStatus.Cancelled) {
         throw new Error('Cannot start cancelled project')
       }
       project.started_at = updateProjectDto.started_at;
-      project.status = PorjectStatus.Active;
+      project.status = ProjectStatus.Active;
     }
 
     if(updateProjectDto.cancelled_at) {
-      if(project.status === PorjectStatus.Completed) {
+      if(project.status === ProjectStatus.Completed) {
         throw new Error('Cannot cancel completed project')
       }
 
-      if(project.status === PorjectStatus.Cancelled) {
+      if(project.status === ProjectStatus.Cancelled) {
         throw new Error('Cannot cancel cancelled project')
       }
 
@@ -65,16 +65,16 @@ export class ProjectsService {
       }  
 
       project.cancelled_at = updateProjectDto.cancelled_at;
-      project.status = PorjectStatus.Cancelled;
+      project.status = ProjectStatus.Cancelled;
     }
 
 
     if(updateProjectDto.finished_at) {
-      if(project.status === PorjectStatus.Completed) {
+      if(project.status === ProjectStatus.Completed) {
         throw new Error('Cannot finish completed project')
       }
 
-      if(project.status === PorjectStatus.Cancelled) {
+      if(project.status === ProjectStatus.Cancelled) {
         throw new Error('Cannot finish cancelled project')
       } 
       
@@ -83,7 +83,7 @@ export class ProjectsService {
       }
       
       project.finished_at = updateProjectDto.finished_at;
-      project.status = PorjectStatus.Completed;
+      project.status = ProjectStatus.Completed;
     }
 
    
