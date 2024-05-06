@@ -7,7 +7,8 @@ export interface IProjectRepository {
   create(project: Project): Promise<void>;
   update(project: Project): Promise<void>;
   findAll(): Promise<Project[]>;
-  findById(id: string): Promise<Project>
+  findById(id: string): Promise<Project>;
+  delete(id: string): Promise<void>
 }
 
 @Injectable()
@@ -33,5 +34,10 @@ export class ProjectTypeOrmRepository implements IProjectRepository{
   findById(id: string): Promise<Project> {
     return this.typeOrmRepo.findOneOrFail({where: {id}})
   }
+
+  async delete(id: string): Promise<void> {
+    await this.typeOrmRepo.delete(id);
+  }
+  
 
 }
