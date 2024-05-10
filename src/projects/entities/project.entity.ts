@@ -67,4 +67,21 @@ export class Project {
     this.started_at = started_at;
     this.status = ProjectStatus.Active;
   }
+
+  cancel(cancelled_at: Date) {
+      if(this.status === ProjectStatus.Completed) {
+        throw new Error('Cannot cancel completed project')
+      }
+
+      if(this.status === ProjectStatus.Cancelled) {
+        throw new Error('Cannot cancel cancelled project')
+      }
+
+      if(cancelled_at < this.started_at) {
+        throw new Error('Cannot cancel project before it started')
+      }  
+
+      this.cancelled_at = cancelled_at;
+      this.status = ProjectStatus.Cancelled;
+    }
 }

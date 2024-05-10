@@ -94,6 +94,6 @@ export class ProjectsService {
   }
 
   remove(id: string) {
-    return `This action removes a #${id} project`;
+    return `This action removed project #${id}`;
   }
 }

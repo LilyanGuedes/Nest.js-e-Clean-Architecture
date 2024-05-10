@@ -10,6 +10,7 @@ import { StartProjectUseCase } from './use-cases/start-project.use-case';
 import { ProjectTypeOrmRepository } from './project.repository';
 import { DeleteProjectUseCase } from './use-cases/delete-project.use-case';
 import { FindOneProjectUseCase } from './use-cases/find-one-project.use-case';
+import { CancelProjectUseCase } from './use-cases/cancel-project.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Project])],
@@ -25,6 +26,7 @@ import { FindOneProjectUseCase } from './use-cases/find-one-project.use-case';
     StartProjectUseCase,
     DeleteProjectUseCase,
     ProjectTypeOrmRepository,
+    CancelProjectUseCase,
     {
       provide: 'IProjectRepository',
       useExisting: ProjectTypeOrmRepository
