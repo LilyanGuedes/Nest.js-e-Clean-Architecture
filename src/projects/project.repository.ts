@@ -39,5 +39,4 @@ export class ProjectTypeOrmRepository implements IProjectRepository{
     await this.typeOrmRepo.delete(id);
   }
   
-
 }

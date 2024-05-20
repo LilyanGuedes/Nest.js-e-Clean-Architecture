@@ -84,4 +84,21 @@ export class Project {
       this.cancelled_at = cancelled_at;
       this.status = ProjectStatus.Cancelled;
     }
+
+  finish(finished_at: Date) {
+      if(this.status === ProjectStatus.Completed) {
+        throw new Error('Cannot finish completed project')
+      }
+
+      if(this.status === ProjectStatus.Cancelled) {
+        throw new Error('Cannot finish cancelled project')
+      } 
+      
+      if(finished_at < this.started_at) {
+        throw new Error('Cannot finish project before it started')
+      }
+      
+      this.finished_at = finished_at;
+      this.status = ProjectStatus.Completed;
+    }
 }
