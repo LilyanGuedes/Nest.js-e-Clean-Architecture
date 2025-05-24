@@ -14,6 +14,7 @@ export class Project {
 
   @PrimaryColumn()
   id: string;
+  
   @Column()
   name: string;
 
